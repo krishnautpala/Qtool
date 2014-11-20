@@ -1,0 +1,1 @@
+{"name":"Qtool","manifest_version":2,"description":"qtool","version":"1.1","icons": {},"app": {"background": { "scripts": ["background.js"]}}}

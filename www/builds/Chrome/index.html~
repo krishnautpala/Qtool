@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+    <!--
+  * Please see the included README.md file for license terms and conditions.
+  -->
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="galleria/galleria.classic.css">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="app_framework/2.1/css/af.ui.min.css">
+        <link rel="stylesheet" type="text/css" href="app_framework/2.1/css/icons.min.css">
+        <title>Blank App Designer Project Template</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+        <!--
+  * The "meta viewport" tag (below) helps your app size appropriately to a device's screen.
+  * Note that the meta viewport approach is being phased out in favor of the @viewport CSS rule.
+  * For a quick overview of both, see this article:
+  *   http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag
+  * To see what happens, try the app on a real device with and without a "meta viewport" tag.
+  * To see what happens, try the app on a real device with and without a "meta viewport" tag.
+-->
+
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1, maximum-scale=2"> -->
+
+        <style>
+            /* following three (cascaded) are equivalent to above three meta viewport statements */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html */
+            /* see http://dev.w3.org/csswg/css-device-adapt/ */
+                @-ms-viewport { width: 100vw ; zoom: 100% ; }                           @viewport { width: 100vw ; zoom: 100% ; }
+                @-ms-viewport { user-zoom: fixed ; }                                    @viewport { user-zoom: fixed ; }
+                /*@-ms-viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }   @viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }*/
+        </style>
+
+        <link rel="stylesheet" href="css/old-android.css">
+        <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+
+        <!-- IMPORTANT: Do not include your weinre script tag as part of your release builds! -->
+        <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work below -->
+        <!-- <script src="http://debug-software.intel.com/target/target-script-min.js#insertabiglongfunkynumberfromthexdkstesttab"></script> -->
+
+        <!-- Most third-party libraries should go here. References (below) are just examples to give you the general idea... -->
+        <!-- <script src="lib/ft/fastclick.js"></script> -->
+
+        <script src="intelxdk.js"></script>
+        <!-- phantom library, needed for XDK "legacy" container api calls -->
+        <script src="cordova.js"></script>
+        <!-- phantom library, needed for Cordova api calls -->
+        <script src="xhr.js"></script>
+        <!-- phantom library, needed for XDK "legacy" container CORS -->
+
+        <script src="js/app.js"></script>
+        <script src="js/init-app.js"></script>
+        <script src="js/init-dev.js"></script>
+        <!--                        
+                        You may substitute jQuery for the App Framework selector library.
+                        See http://app-framework-software.intel.com/documentation.php#afui/afui_jquery
+                -->
+        <script type="application/javascript" src="app_framework/2.1/appframework.js"></script>
+        <script type="application/javascript" src="app_framework/2.1/appframework.ui.js" data-ver="1"></script>
+        <!--            
+            You may substitute jQuery for the App Framework selector library.
+            See http://app-framework-software.intel.com/documentation.php#afui/afui_jquery
+        -->
+        <script type="application/javascript" src="js/jquery.min.js"></script>
+        <script type="application/javascript" src="sidebar/js/jquery.event.move.js"></script>
+        <script type="application/javascript" src="sidebar/js/jquery.event.swipe.js"></script>
+        <script type="application/javascript" src="sidebar/js/sidebar.js"></script>
+        <script type="application/javascript" src="sidebar/js/swipe.js"></script>
+        <script type="application/javascript" src="js/index_user_scripts.js"></script>
+        <script type="application/javascript" src="js/af_subpage.js"></script>
+        <script type="application/javascript" src="galleria/galleria-1.3.6.min.js"></script>
+        <script type="application/javascript" src="galleria/galleria.classic.min.js"></script>
+        <script type="application/javascript" src="galleria/galleria-startup.js"></script>
+        <!--            
+            You may substitute jQuery for the App Framework selector library.
+            See http://app-framework-software.intel.com/documentation.php#afui/afui_jquery
+        -->
+        <script type="application/javascript" src="justgage/js/raphael.min.js"></script>
+        <script type="application/javascript" src="justgage/js/justgage.min.js"></script>
+        <script type="application/javascript" src="justgage/gauges.js"></script>
+        <!--            
+            You may substitute jQuery for the App Framework selector library.
+            See http://app-framework-software.intel.com/documentation.php#afui/afui_jquery
+        -->
+        <script type="application/javascript" src="admob/admob.js"></script>
+
+        <script type="text/javascript">
+            var onDeviceReady=function(){
+                navigator.splashscreen.hide();
+                initAdMob();
+                showAdMobBanner();
+    		};
+    		document.addEventListener("deviceready",onDeviceReady,false);
+            
+            function initAdMob(){
+                if ( window.plugins && window.plugins.AdMob ) {
+                    var admob_ios_key = "ca-app-pub-5852274281498468/6568980432";
+                    var admob_ios_key_interstitial = "cca-app-pub-5852274281498468/6568980432";
+                    window.plugins.AdMob.setOptions( {
+                        publisherId: admob_ios_key,
+                        bannerAtTop: false, // set to true, to put banner at top
+                        overlap: false, // set to true, to allow banner overlap webview
+                        offsetTopBar: true, // set to true to avoid ios7 status bar overlap                    
+                        interstitialAdId: admob_ios_key_interstitial,
+                        autoShow: true, // autoshow intertitial Ad
+                        isTesting: false // receiving test ad
+                    });
+                } else {
+                    alert("AdMob plugin not ready");
+                }
+            }
+            
+            function showAdMobBanner(){
+                window.plugins.AdMob.createBannerView();
+            }
+            
+            function showAdMobInterstitial(){
+                window.plugins.AdMob.createInterstitialView();
+            }
+        </script>
+        <style type="text/css">
+            #galleria{height:467px}
+             }
+        </style>
+
+	<script type="text/javascript">
+	$('#gallery').galleria({
+	width: 700,
+	height: 467 //--I made heights match
+	});	
+	</script>
+    </head>
+
+    <body id="afui">
+
+        <!-- IMPORTANT: Do not include your weinre script tag as part of your release builds! -->
+        <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work above -->
+        <!-- <script src="http://debug-software.intel.com/target/target-script-min.js#insertabiglongfunkynumberfromthexdkstesttab"></script> -->
+
+        <div class="uwrap" id="content">
+            <div class="upage panel" id="mainpage" data-header="af-header-0" data-footer="none">
+                <div class="upage-outer">
+                    <header class="container-group inner-element uib_w_1" data-uib="app_framework/header" data-ver="1" id="af-header-0">
+                        <h1>Qtool</h1>
+                        <div class="widget-container wrapping-col single-centered"></div>
+                        <div class="widget-container content-area horiz-area wrapping-col left">
+                            <a class="button widget uib_w_9 d-margins icon settings" data-uib="app_framework/button" data-ver="1" id="sidemenu_button"></a>
+                        </div>
+                        <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                    </header>
+                    <div class="upage-content" id="mainsub">
+
+                        <div class="grid grid-pad urow uib_row_1 row-height-1" data-uib="layout/row" data-ver="0">
+                            <div class="col uib_col_1 col-0_12-12" data-uib="layout/col" data-ver="0">
+                                <div class="widget-container content-area vertical-col">
+
+                                    <div class="table-thing with-label widget uib_w_13 d-margins" data-uib="app_framework/input" data-ver="1">
+                                        <label class="narrow-control label-inline" for="username">username</label>
+                                        <input class="wide-control" type="email" id="username" onchange="setUsername()">
+                                    </div>
+                                    <div class="table-thing with-label widget uib_w_14 d-margins" data-uib="app_framework/input" data-ver="1">
+                                        <label class="narrow-control label-inline" for="password">password</label>
+                                        <input class="wide-control" type="password" id="password" onchange="setPassword()">
+                                    </div><a class="button widget uib_w_15 d-margins icon key green" data-uib="app_framework/button" data-ver="1" id="LOGIN" onchange="checkCredentials()">SIGNIN</a>
+                                    <div class="widget uib_w_16 d-margins" data-uib="media/text" data-ver="0" id="USERPASS_ERR">
+                                        <div class="widget-container left-receptacle"></div>
+                                        <div class="widget-container right-receptacle"></div>
+                                        <div>
+                                            <p>&nbsp;</p>
+                                        </div>
+                                    </div>
+                                    <span class="uib_shim"></span>
+                                </div>
+                            </div>
+                            <span class="uib_shim"></span>
+                        </div>
+                    </div>
+                    <div id="APPLICATION_page" class="upage-content hidden">
+
+                        <div class="grid grid-pad urow uib_row_3 row-height-3" data-uib="layout/row" data-ver="0">
+                            <div class="col uib_col_5 col-0_12-12" data-uib="layout/col" data-ver="0">
+                                <div class="widget-container content-area vertical-col">
+
+                                    <div class="widget uib_w_18 d-margins" data-uib="media/file_input" data-ver="0">
+                                        <input type="file" onchange="readfile(this.files[0])">
+                                    </div>
+                                    <div class="widget uib_w_19 d-margins" data-uib="media/text" data-ver="0" id="question">
+                                        <div class="widget-container left-receptacle"></div>
+                                        <div class="widget-container right-receptacle"></div>
+                                        <div>
+                                            <p>&nbsp;</p>
+                                        </div>
+                                    </div>
+                                    <div class="table-thing with-label widget uib_w_20 d-margins" data-uib="app_framework/checkbox_group" data-ver="1">
+                                        <div class="wide-control">
+                                            <div class="widget uib_w_21" data-uib="app_framework/checkbox" data-ver="1">
+                                                <input type="checkbox" id="af-checkbox-0">
+                                                <label class="content-box" for="af-checkbox-0">0</label>
+                                            </div>
+                                            <div class="widget uib_w_22" data-uib="app_framework/checkbox" data-ver="1">
+                                                <input type="checkbox" id="af-checkbox-1">
+                                                <label class="content-box" for="af-checkbox-1">1</label>
+                                            </div>
+                                            <div class="widget uib_w_23" data-uib="app_framework/checkbox" data-ver="1">
+                                                <input type="checkbox" id="af-checkbox-2">
+                                                <label class="content-box" for="af-checkbox-2">2</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-thing with-label widget uib_w_24 d-margins" data-uib="app_framework/checkbox_group" data-ver="1">
+                                        <div class="wide-control">
+                                            <div class="widget uib_w_25" data-uib="app_framework/checkbox" data-ver="1">
+                                                <input type="checkbox" id="af-checkbox-3">
+                                                <label class="content-box" for="af-checkbox-3">3</label>
+                                            </div>
+                                            <div class="widget uib_w_26" data-uib="app_framework/checkbox" data-ver="1">
+                                                <input type="checkbox" id="af-checkbox-4">
+                                                <label class="content-box" for="af-checkbox-4">5</label>
+                                            </div>
+                                            <div class="widget uib_w_27" data-uib="app_framework/checkbox" data-ver="1">
+                                                <input type="checkbox" id="af-checkbox-5">
+                                                <label class="content-box" for="af-checkbox-5">8</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-thing with-label widget uib_w_28 d-margins" data-uib="app_framework/checkbox_group" data-ver="1">
+                                        <div class="wide-control">
+                                            <div class="widget uib_w_29" data-uib="app_framework/checkbox" data-ver="1">
+                                                <input type="checkbox" id="af-checkbox-6">
+                                                <label class="content-box" for="af-checkbox-6">13</label>
+                                            </div>
+                                            <div class="widget uib_w_30" data-uib="app_framework/checkbox" data-ver="1">
+                                                <input type="checkbox" id="af-checkbox-7">
+                                                <label class="content-box" for="af-checkbox-7">?</label>
+                                            </div>
+                                        </div>
+                                    </div><a class="button widget uib_w_35 d-margins icon right gray" data-uib="app_framework/button" data-ver="1">Next</a>
+                                    <div class="button-grouped flex widget uib_w_31 d-margins" data-uib="app_framework/button_group" data-ver="1"><a class="button widget uib_w_33 icon close red" data-uib="app_framework/button" data-ver="1">CANCEL</a><a class="button widget uib_w_34 icon check green" data-uib="app_framework/button" data-ver="1" style="border-top-right-radius: 6px; border-bottom-right-radius: 6px;"
+                                        onclick=" getSubmitStatus()">SUBMIT</a>
+                                    </div>
+                                    <div class="widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" id="Submit_Form">
+                                        <div class="widget-container left-receptacle"></div>
+                                        <div class="widget-container right-receptacle"></div>
+                                        <div>
+                                            <p>&nbsp;</p>
+                                        </div>
+                                    </div><span class="uib_shim"></span>
+                                </div>
+                            </div>
+                            <span class="uib_shim"></span>
+                        </div>
+                    </div>
+                    <div id="SCRUM_page" class="upage-content hidden">
+
+                        <div class="grid grid-pad urow uib_row_4 row-height-4" data-uib="layout/row" data-ver="0">
+                            <div class="col uib_col_4 col-0" data-uib="layout/col" data-ver="0">
+                                <div class="widget-container content-area vertical-col">
+
+                                    <div class="grid grid-pad urow uib_row_6 row-height-6" data-uib="layout/row" data-ver="0">
+                                        <div class="col uib_col_7 col-1_12-12" data-uib="layout/col" data-ver="0">
+                                            <div class="widget-container content-area vertical-col">
+
+                                                <div class="galleria image-gallery-size widget uib_w_40 d-margins" data-uib="media/image_gallery" data-ver="0" data-sm-trigger="true" images-json="gallery_images/gallery_images.json">
+                                                </div><span class="uib_shim"></span>
+                                            </div>
+                                        </div>
+                                        <span class="uib_shim"></span>
+                                    </div>
+                                    <span class="uib_shim"></span>
+                                </div>
+                            </div>
+                            <span class="uib_shim"></span>
+                        </div>
+                    </div>
+                    <div id="Reports_page" class="upage-content hidden">
+
+                        <div class="grid grid-pad urow uib_row_5 row-height-5" data-uib="layout/row" data-ver="0">
+                            <div class="col uib_col_3 col-0_12-12" data-uib="layout/col" data-ver="0">
+                                <div class="widget-container content-area vertical-col">
+
+                                    <div class="widget uib_w_36 d-margins" data-uib="media/file_input" data-ver="0">
+                                        <input type="file" onchange="readfile(this.files[0])">
+                                    </div>
+                                    <div class="widget uib_w_37 d-margins" data-uib="media/text" data-ver="0" id="questions">
+                                        <div class="widget-container left-receptacle"></div>
+                                        <div class="widget-container right-receptacle"></div>
+                                        <div>
+                                            <p>&nbsp;</p>
+                                        </div>
+                                    </div>
+                                    <div class="uib-justgage gauge no_wrap widget uib_w_39" data-uib="widgets/justgage" data-ver="0" id="uib-justgage-0" data-gauge="{'service method':'none','data array':'not set','title':'Voting','value':20,'max':100,'hideMinMax':0,'hideValue':0,'hideInnerShadow':1}"
+                                    data-rpath="null" data-array="not set"></div>
+                                    <span class="uib_shim"></span>
+                                </div>
+                            </div>
+                            <span class="uib_shim"></span>
+                        </div>
+                    </div>
+                    <!-- /upage-content -->
+
+                    <div class="inner-element uib_w_3 uib_sidebar leftbar bar-bg thumb-bg bar-gutter" data-uib="layout/left_sidebar" data-ver="0" data-anim="{'style':'push', 'v':200, 'side':'left'}" id="sidemenu">
+                        <div class="sidebar-content">
+
+                            <div class="grid urow uib_row_2 row-height-2" data-uib="layout/row" data-ver="0">
+                                <div class="col uib_col_2 col-0_12-12" data-uib="layout/col" data-ver="0">
+                                    <div class="widget-container content-area vertical-col">
+
+                                        <ul class="list widget uib_w_4 d-margins" data-uib="app_framework/listview" data-ver="1">
+                                            <li class="widget uib_w_5" data-uib="app_framework/listitem" data-ver="1"><a class="icon home">LOGIN</a>
+                                            </li>
+
+                                            <li class="widget uib_w_8" data-uib="app_framework/listitem" data-ver="1"><a class="icon tag">Application</a>
+                                            </li>
+                                            <li class="widget uib_w_7" data-uib="app_framework/listitem" data-ver="1"><a class="icon camera">SCRUM CARDS</a>
+                                            </li>
+                                            <li class="widget uib_w_6" data-uib="app_framework/listitem" data-ver="1"><a class="icon graph">Reports</a>
+                                            </li>
+                                        </ul><span class="uib_shim"></span>
+                                    </div>
+                                </div>
+                                <span class="uib_shim"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /upage-outer -->
+
+            </div>
+            <!-- /upage -->
+
+        </div>
+        <!-- /uwrap -->
+    </body>
+
+</html>
