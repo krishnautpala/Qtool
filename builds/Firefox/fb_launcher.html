@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <style type="text/css">
+            .connect_widget_share_comment_span {display:none !important;}
+            .connect_widget_admin_span {display:none !important;}
+            .connect_widget_error_span {display:none !important;}
+        </style>
+        <script src='https://connect.facebook.net/en_US/all.js'></script>
+        <script>
+            var init = false;
+            window.onload = function () {
+                var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+                var eventer = window[eventMethod];
+                var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+                eventer(messageEvent, function (e) {
+                    // This URL needs to be changed to the URL of your site
+                    if (event.origin !== "http://yoursiteurl.com")
+                        return;
+
+                    if (!init) {
+                        FB.init({ appId: krishna9028@live.com, status: true, cookie: true });
+                        init = true;
+                    }
+
+                    console.log('parent received message!:  ', e.data);
+                    console.log('parent received message!:  ', e.origin);
+
+                    var obj = {
+                        method: 'pay',
+                        order_info: e.data,
+                        action: 'buy_item',
+                        dev_purchase_params: { 'oscif': true }
+                    };
+                    FB.ui(obj, function (data) {
+                        e.source.postMessage(data, e.origin);
+                    });
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <iframe src='//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fapps%2Fapplication.php%3Fid%3D12345&amp;layout=standard&amp;show_faces=false&amp;width=480&amp;action=like&amp;colorscheme=light&amp;height=35' 
+            scrolling='no' 
+            frameborder='0' 
+            style='border:none; overflow:hidden;width:480; height:35px;' 
+            allowTransparency='true'
+            />
+        <iframe src='index.html'
+            frameborder='0' 
+            scrolling='no' 
+            width='480' 
+            height='320' 
+            style='position:absolute; left:0px; top:55px; overflow:hidden;zoom: 1; -moz-transform: scale(1); -moz-transform-origin: 0 0; -o-transform: scale(1); -o-transform-origin: 0 0; -webkit-transform: scale(1); -webkit-transform-origin: 0 0; '  
+            />
+    </body>
+</html>
